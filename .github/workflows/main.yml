@@ -1,0 +1,33 @@
+name: Build PC Butler Windows exe
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyQt5 psutil matplotlib fpdf2 pyinstaller
+
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --noconfirm pcbutler_gui.spec
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcbutler-windows-build
+          path: dist/pcbutler/
