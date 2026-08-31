@@ -72,10 +72,17 @@ COLOR_MAP = {
 
 def console_logger(msg: str, color: str = 'white', end: str = '\n'):
     """색상을 입혀 콘솔에 메시지를 출력합니다."""
-    color_code = COLOR_MAP.get(color.lower(), COLOR_MAP['white'])
-    sys.stdout.write(f"{color_code}{msg}{COLOR_MAP['end']}{end}")
-    sys.stdout.flush()
-
+    # 창 모드(console=False)로 빌드된 exe에서는 sys.stdout이 None이라
+    # 그냥 write()하면 죽는다. 콘솔이 없으면 조용히 무시한다.
+    if sys.stdout is None:
+        return
+    try:
+        color_code = COLOR_MAP.get(color.lower(), COLOR_MAP['white'])
+        sys.stdout.write(f"{color_code}{msg}{COLOR_MAP['end']}{end}")
+        sys.stdout.flush()
+    except Exception:
+        pass
+        
 def get_plugin_class(file_path: str) -> Any:
     """주어진 파일 경로에서 PCButlerPlugin을 상속받은 클래스를 로드합니다."""
     spec = importlib.util.spec_from_file_location("module.name", file_path)
