@@ -127,7 +127,7 @@ def _parse_plugin_index(file_path: str) -> Dict[str, Dict[str, str]]:
     """plugin_index_categorized.txt 파일의 내용을 파싱하여 메타데이터를 추출합니다."""
     metadata = {}
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, 'r', encoding='utf-8-sig') as f:
             reader = csv.reader(f, delimiter='\t')
             header = next(reader)
             
