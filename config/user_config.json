@@ -1,0 +1,8 @@
+{
+  "auto_update_enabled": true,
+  "update_server_url": "...",
+  "db_retention_days": 30,
+  "alert_enabled": true,
+  "alert_threshold": 5,
+  "alert_recipient": "pcbutler106@gmail.com"
+}
