@@ -60,6 +60,23 @@ class DashboardgenPlugin(PCButlerPlugin):
         approved_by = approval_data.get("approved_by", "미확인 사용자")
         # approved_upgrades 키가 없거나 딕셔너리가 아닐 수 있으므로 안전하게 처리
         approved_plugins = approval_data.get("approved_upgrades", {}) if isinstance(approval_data.get("approved_upgrades"), dict) else {}
+
+        # 🚨 FIX(2026-08-31): 아래 f-string(html_template)이 삼중따옴표(""")로 시작하는데,
+        #    예전 코드는 그 안에서 다시 f"""...""" (같은 삼중따옴표)를 중첩해서 썼다.
+        #    Python 3.12 미만에서는 f-string 안에 같은 종류의 따옴표를 중첩할 수 없어
+        #    'plugin_dashboardgen.py' 자체가 SyntaxError로 아예 임포트되지 않았다
+        #    (main.py에서는 조용히 로드 실패로 처리되어 대시보드 생성 기능이 통째로 사라짐).
+        #    중첩 f-string 없이 항목 하나를 만드는 헬퍼 함수로 분리해 버전 호환성 문제를 없앤다.
+        def _render_upgrade_item(plugin_name, is_approved):
+            css_class = 'approved' if is_approved else 'denied'
+            icon = '✅' if is_approved else '❌'
+            status_text = '승인 완료' if is_approved else '승인 거부/보류'
+            return (
+                f'<li class="list-item {css_class}">'
+                f'<span class="icon">{icon}</span>'
+                f'{plugin_name}: {status_text}'
+                f'</li>'
+            )
         
         # 4. 시각화 상태 결정
         status_color = "#3498db" # INFO: blue
@@ -124,13 +141,10 @@ class DashboardgenPlugin(PCButlerPlugin):
                 <h3>업데이트 승인 현황</h3>
                 <p><strong>최종 승인자:</strong> {approved_by}</p>
                 <ul>
-                    {''.join([
-                        f"""<li class="list-item {'approved' if is_approved else 'denied'}">
-                            <span class="icon">{ '✅' if is_approved else '❌'}</span>
-                            {plugin_name}: { '승인 완료' if is_approved else '승인 거부/보류'}
-                        </li>"""
+                    {''.join(
+                        _render_upgrade_item(plugin_name, is_approved)
                         for plugin_name, is_approved in approved_plugins.items()
-                    ]) if approved_plugins else '<li class="list-item pending"><span class="icon">ℹ️</span> 대기 중인 업데이트 제안 없음</li>'}
+                    ) if approved_plugins else '<li class="list-item pending"><span class="icon">ℹ️</span> 대기 중인 업데이트 제안 없음</li>'}
                 </ul>
             </div>
         </div>

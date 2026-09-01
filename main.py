@@ -48,17 +48,33 @@ except ImportError:
 # config.ini, plugin_index_categorized.txt를 전혀 못 찾는 문제가 있었다.
 # (plugin_dashboardgen.py는 이미 sys.frozen 체크로 이 문제를 우회하고 있었는데
 #  main.py 자체에는 이 처리가 빠져 있었다.) sys.executable 기준으로 우회한다.
+#
+# 🚨 FIX (2026-09-01): 위 수정만으로는 부족했다. PyInstaller 6.0 이상은 onedir
+# 빌드 시 exe 옆에 파일을 그대로 풀지 않고, exe만 남기고 나머지(=datas로 넣은
+# plugins/, config.ini, plugin_index_categorized.txt, config/ 전부)를
+# "_internal" 하위 폴더 안에 넣는다. 그런데 BASE_DIR은 sys.executable의 부모
+# 폴더(= exe가 있는 폴더, _internal의 "바깥")를 가리키므로, PLUGINS_DIR/INDEX_FILE이
+# 실제로는 존재하지 않는 "exe 폴더 바로 아래"를 찾다가 계속 FileNotFoundError가
+# 났다(그 결과 인덱스 파싱이 빈 값으로 실패해 "일반 모드"에 결산용 플러그인 3개만
+# 남는 것으로 나타났다 — BOM 문제와는 별개의, 더 근본적인 원인이었다).
+# PyInstaller가 datas를 실제로 풀어놓는 위치는 sys._MEIPASS이므로(onedir에서는
+# 이게 바로 _internal 폴더), 번들 리소스는 RESOURCE_DIR(=sys._MEIPASS)에서 찾고,
+# 보고서/로그처럼 사용자가 직접 봐야 하는 출력물은 계속 BASE_DIR(=exe 폴더)에 쓴다.
 if getattr(sys, 'frozen', False):
     BASE_DIR = os.path.dirname(sys.executable)
+    RESOURCE_DIR = getattr(sys, '_MEIPASS', BASE_DIR)
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    RESOURCE_DIR = BASE_DIR
 if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
+if RESOURCE_DIR not in sys.path:
+    sys.path.append(RESOURCE_DIR)
 # --- 경로 설정 완료 ---
 
-# 플러그인 폴더 경로
-PLUGINS_DIR = os.path.join(BASE_DIR, "plugins")
-INDEX_FILE = os.path.join(BASE_DIR, "plugin_index_categorized.txt") # <--- 인덱스 파일 경로
+# 플러그인 폴더 경로 (번들 리소스이므로 RESOURCE_DIR 기준)
+PLUGINS_DIR = os.path.join(RESOURCE_DIR, "plugins")
+INDEX_FILE = os.path.join(RESOURCE_DIR, "plugin_index_categorized.txt") # <--- 인덱스 파일 경로
 
 # ==============================================================================
 # 로거 및 유틸리티 함수
@@ -72,17 +88,27 @@ COLOR_MAP = {
 
 def console_logger(msg: str, color: str = 'white', end: str = '\n'):
     """색상을 입혀 콘솔에 메시지를 출력합니다."""
-    # 창 모드(console=False)로 빌드된 exe에서는 sys.stdout이 None이라
-    # 그냥 write()하면 죽는다. 콘솔이 없으면 조용히 무시한다.
-    if sys.stdout is None:
-        return
+    # 🚨 FIX (2026-08-31): 창 모드(console=False)로 빌드된 exe에서는 sys.stdout이
+    # None이라 그냥 write()하면 죽는다(원래 있던 버그). 그런데 콘솔이 없다고
+    # 메시지를 그냥 버리면, 이 함수로만 보고되는 오류(플러그인 인덱스 파싱 실패 등)가
+    # 창 모드에서는 아무 데도 남지 않아 사용자가 원인을 알 방법이 없어진다.
+    # 그래서 콘솔이 없을 때는 대신 logs/pcbutler_console.log 파일에 남긴다.
+    if sys.stdout is not None:
+        try:
+            color_code = COLOR_MAP.get(color.lower(), COLOR_MAP['white'])
+            sys.stdout.write(f"{color_code}{msg}{COLOR_MAP['end']}{end}")
+            sys.stdout.flush()
+            return
+        except Exception:
+            pass
     try:
-        color_code = COLOR_MAP.get(color.lower(), COLOR_MAP['white'])
-        sys.stdout.write(f"{color_code}{msg}{COLOR_MAP['end']}{end}")
-        sys.stdout.flush()
+        log_dir = os.path.join(BASE_DIR, "logs")
+        os.makedirs(log_dir, exist_ok=True)
+        with open(os.path.join(log_dir, "pcbutler_console.log"), 'a', encoding='utf-8') as f:
+            f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}{end}")
     except Exception:
         pass
-        
+
 def get_plugin_class(file_path: str) -> Any:
     """주어진 파일 경로에서 PCButlerPlugin을 상속받은 클래스를 로드합니다."""
     spec = importlib.util.spec_from_file_location("module.name", file_path)
@@ -127,6 +153,12 @@ def _parse_plugin_index(file_path: str) -> Dict[str, Dict[str, str]]:
     """plugin_index_categorized.txt 파일의 내용을 파싱하여 메타데이터를 추출합니다."""
     metadata = {}
     try:
+        # 🚨 FIX (2026-08-31): GitHub 웹 편집기 등을 거치며 파일 맨 앞에
+        # UTF-8 BOM이 붙는 경우가 있는데, encoding='utf-8'로 열면 첫 헤더가
+        # "Filename"이 아니라 "﻿Filename"으로 읽혀 header.index('Filename')이
+        # 실패하고(빈 metadata 반환) 결과적으로 '일반 모드'에 결산용 플러그인
+        # 3개(stat_summary/reportmerge/pdfexport)만 남는 문제가 있었다.
+        # utf-8-sig는 BOM이 있으면 제거하고, 없으면 utf-8과 동일하게 동작한다.
         with open(file_path, 'r', encoding='utf-8-sig') as f:
             reader = csv.reader(f, delimiter='\t')
             header = next(reader)
@@ -348,7 +380,7 @@ def load_plugins() -> Dict[str, Any]:
 # ==============================================================================
 if __name__ == "__main__":
     # 1. 경로 및 설정 파일 정의
-    CONFIG_FILE = os.path.join(BASE_DIR, "config.ini")
+    CONFIG_FILE = os.path.join(RESOURCE_DIR, "config.ini")
     
     # 2. 콘솔 모드 여부 확인
     is_console_mode = len(sys.argv) > 1 and sys.argv[1].lower() == "--console"

@@ -23,7 +23,14 @@ a = Analysis(
         ('plugin_index_categorized.txt', '.'),
         ('config', 'config'),
     ],
-    hiddenimports=[],
+    # NOTE (2026-09-01): plugins/*.py는 main.py가 importlib으로 동적 로드하므로
+    # PyInstaller의 정적 분석(main.py에서부터 따라가는 import 추적)은 plugin 파일들
+    # 내부의 import(matplotlib, fpdf, psutil 등)를 발견하지 못한다. 명시적으로
+    # hiddenimports에 넣어주지 않으면 빌드된 exe에서 plugin_graphgen.py /
+    # plugin_pdfexport.py가 "No module named 'matplotlib'/'fpdf'"로 조용히 실패할
+    # 위험이 있다 (실제 재현: 2026-09-01, 새 venv에서 이 두 모듈만 안 깔았더니
+    # 동일 증상 발생 - requirements.txt 신규 작성으로 별도 대응, 여기서는 빌드용).
+    hiddenimports=['matplotlib', 'fpdf', 'psutil'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -52,8 +59,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    # 아이콘(butler.ico)은 이번 GitHub Actions 빌드 묶음에 포함하지 않았다.
-    # 굳이 필요하면 나중에 icon=['butler.ico']를 추가하고 그 파일도 레포에 올리면 된다.
+    icon=['butler.ico'],
 )
 coll = COLLECT(
     exe,

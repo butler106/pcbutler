@@ -8,8 +8,16 @@ import sys
 import io
 
 # 스크립트의 표준 출력(stdout)과 표준 오류(stderr)의 인코딩을 UTF-8로 강제 설정
-sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+# 🚨 FIX(2026-08-31): sys.stdout.detach()가 이전에는 try/except 없이 노출되어 있었음.
+#    detach()는 두 번째 호출 시 예외를 던지고, PyInstaller --windowed 빌드에서는
+#    sys.stdout이 None이라 None.detach()가 AttributeError로 죽는다. idempotent한 reconfigure()로 교체.
+try:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
 
 # --- 아래에 기존 플러그인 코드를 그대로 두시면 됩니다 ---
 

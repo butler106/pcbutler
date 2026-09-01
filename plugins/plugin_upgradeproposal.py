@@ -12,8 +12,10 @@ from datetime import datetime
 
 # 콘솔 인코딩 문제 방지
 try:
-    sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-    sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 except:
     pass
 

@@ -1,83 +1,83 @@
 Filename	Category	UserMode	Description	DisplayName
-plugin_ai_recommend.py	AI/Advanced	Basic	Ai Recommend 기능을 실행합니다.	Ai Recommend
-plugin_antiviruscheck.py	Network/Security	Basic	Antiviruscheck 기능을 실행합니다.	Antiviruscheck
-plugin_autoruncheck.py	System Diagnostics	Basic	Autoruncheck 기능을 실행합니다.	Autoruncheck
-plugin_backupcheck.py	System Diagnostics	Basic	Backupcheck 기능을 실행합니다.	Backupcheck
-plugin_browsercache.py	Optimization	Basic	Browsercache 기능을 실행합니다.	Browsercache
-plugin_browsercheck.py	System Diagnostics	Basic	Browsercheck 기능을 실행합니다.	Browsercheck
-plugin_configlock.py	Configuration/Management	Expert	Configlock 기능을 실행합니다.	Configlock
-plugin_dashboardgen.py	Reporting	Basic	Dashboardgen 기능을 실행합니다.	Dashboardgen
-plugin_diskcheck.py	System Diagnostics	Basic	Diskcheck 기능을 실행합니다.	Diskcheck
-plugin_dismcheck.py	System Diagnostics	Basic	Dismcheck 기능을 실행합니다.	Dismcheck
-plugin_dnscheck.py	System Diagnostics	Basic	Dnscheck 기능을 실행합니다.	Dnscheck
-plugin_drivercheck.py	System Diagnostics	Basic	Drivercheck 기능을 실행합니다.	Drivercheck
-plugin_eventlog.py	Reporting	Basic	Eventlog 기능을 실행합니다.	Eventlog
-plugin_feedback.py	UI Components	Basic	Feedback 기능을 실행합니다.	Feedback
-plugin_firewallcheck.py	Network/Security	Basic	Firewallcheck 기능을 실행합니다.	Firewallcheck
-plugin_fontcheck.py	System Diagnostics	Basic	Fontcheck 기능을 실행합니다.	Fontcheck
-plugin_graphgen.py	Reporting	Basic	Graphgen 기능을 실행합니다.	Graphgen
-plugin_list_widget.py	UI Components	Basic	List Widget 기능을 실행합니다.	List Widget
-plugin_loganalyzer.py	Reporting	Expert	Loganalyzer 기능을 실행합니다.	Loganalyzer
-plugin_logincheck.py	System Diagnostics	Basic	Logincheck 기능을 실행합니다.	Logincheck
-plugin_networkfix.py	Network/Security	Basic	Networkfix 기능을 실행합니다.	Networkfix
-plugin_networkprofile.py	Configuration/Management	Basic	Networkprofile 기능을 실행합니다.	Networkprofile
-plugin_orgtemplate.py	Optimization	Basic	Orgtemplate 기능을 실행합니다.	Orgtemplate
-plugin_pdfexport.py	Reporting	Basic	Pdfexport 기능을 실행합니다.	Pdfexport
-plugin_powercheck.py	System Diagnostics	Basic	Powercheck 기능을 실행합니다.	Powercheck
-plugin_printercheck.py	System Diagnostics	Basic	Printercheck 기능을 실행합니다.	Printercheck
-plugin_quarantine.py	Network/Security	Basic	Quarantine 기능을 실행합니다.	Quarantine
-plugin_quarantinezip.py	Network/Security	Basic	Quarantinezip 기능을 실행합니다.	Quarantinezip
-plugin_ramstress.py	System Diagnostics	Basic	Ramstress 기능을 실행합니다.	Ramstress
-plugin_rdpcheck.py	System Diagnostics	Basic	Rdpcheck 기능을 실행합니다.	Rdpcheck
-plugin_reportbackup.py	Reporting	Basic	Reportbackup 기능을 실행합니다.	Reportbackup
-plugin_reportcleanup.py	Reporting	Basic	Reportcleanup 기능을 실행합니다.	Reportcleanup
-plugin_reportcompress.py	Reporting	Basic	Reportcompress 기능을 실행합니다.	Reportcompress
-plugin_reportflag.py	Reporting	Basic	Reportflag 기능을 실행합니다.	Reportflag
-plugin_reportmerge.py	Reporting	Basic	Reportmerge 기능을 실행합니다.	Reportmerge
-plugin_reportsend.py	Reporting	Basic	Reportsend 기능을 실행합니다.	Reportsend
-plugin_restorepoint.py	System Repair	Basic	Restorepoint 기능을 실행합니다.	Restorepoint
-plugin_resultdb.py	Configuration/Management	Basic	Resultdb 기능을 실행합니다.	Resultdb
-plugin_selfcheck.py	System Diagnostics	Basic	Selfcheck 기능을 실행합니다.	Selfcheck
-plugin_sfcscan.py	Network/Security	Basic	Sfcscan 기능을 실행합니다.	Sfcscan
-plugin_sharecheck.py	System Diagnostics	Basic	Sharecheck 기능을 실행합니다.	Sharecheck
-plugin_stat_summary.py	Reporting	Basic	Stat Summary 기능을 실행합니다.	Stat Summary
-plugin_taskcheck.py	System Diagnostics	Basic	Taskcheck 기능을 실행합니다.	Taskcheck
-plugin_tempclean.py	Optimization	Basic	Tempclean 기능을 실행합니다.	Tempclean
-plugin_uaccheck.py	System Diagnostics	Basic	Uaccheck 기능을 실행합니다.	Uaccheck
-plugin_uistatus.py	System Diagnostics	Basic	Uistatus 기능을 실행합니다.	Uistatus
-plugin_updatecheck.py	Maintenance	Basic	Updatecheck 기능을 실행합니다.	Updatecheck
-plugin_usbcheck.py	System Diagnostics	Basic	Usbcheck 기능을 실행합니다.	Usbcheck
-plugin_usbscan.py	Network/Security	Basic	Usbscan 기능을 실행합니다.	Usbscan
-plugin_usercheck.py	System Diagnostics	Basic	Usercheck 기능을 실행합니다.	Usercheck
-plugin_userconfig.py	Configuration/Management	Expert	Userconfig 기능을 실행합니다.	Userconfig
-plugin_userprofile.py	Configuration/Management	Basic	Userprofile 기능을 실행합니다.	Userprofile
-plugin_versioninfo.py	System Diagnostics	Basic	Versioninfo 기능을 실행합니다.	Versioninfo
-plugin_wingetupgrade.py	Maintenance	Basic	Wingetupgrade 기능을 실행합니다.	Wingetupgrade
-plugin_clipboardcheck.py	System Diagnostics	Basic	Clipboardcheck 기능을 실행합니다.	Clipboardcheck
-plugin_packagemanager.py	Configuration/Management	Expert	Packagemanager 기능을 실행합니다.	Packagemanager
-plugin_diskhealthcheck.py	System Diagnostics	Basic	Diskhealthcheck 기능을 실행합니다.	Diskhealthcheck
-plugin_windowsservicestatus.py	System Diagnostics	Basic	Windowsservicestatus 기능을 실행합니다.	Windowsservicestatus
-plugin_tempfolderusage.py	Optimization	Basic	Tempfolderusage 기능을 실행합니다.	Tempfolderusage
-plugin_sfcccheck.py	System Diagnostics	Basic	Sfcccheck 기능을 실행합니다.	Sfcccheck
-plugin_drivecheck.py	System Diagnostics	Basic	Drivecheck 기능을 실행합니다.	Drivecheck
-plugin_patchstatus.py	System Diagnostics	Basic	Patchstatus 기능을 실행합니다.	Patchstatus
-plugin_networkpolicy.py	Network/Security	Expert	Networkpolicy 기능을 실행합니다.	Networkpolicy
-plugin_browserhistory.py	Optimization	Basic	Browserhistory 기능을 실행합니다.	Browserhistory
-plugin_inclusion.py	Configuration/Management	Basic	Inclusion 기능을 실행합니다.	Inclusion
-plugin_stat_summary_en.py	Reporting	Basic	Stat Summary En 기능을 실행합니다.	Stat Summary En
-plugin_upgradeproposal.py	Maintenance	Basic	Upgradeproposal 기능을 실행합니다.	Upgradeproposal
-plugin_applyupgrade.py	Maintenance	Basic	Applyupgrade 기능을 실행합니다.	Applyupgrade
-plugin_remotepush.py	Remote/Automation	Expert	Remotepush 기능을 실행합니다.	Remotepush
-plugin_resultsync.py	Remote/Automation	Basic	Resultsync 기능을 실행합니다.	Resultsync
-plugin_approvalui.py	UI Components	Expert	Approvalui 기능을 실행합니다.	Approvalui
-plugin_autosign.py	Remote/Automation	Basic	Autosign 기능을 실행합니다.	Autosign
-plugin_selfupdate.py	Maintenance	Basic	Selfupdate 기능을 실행합니다.	Selfupdate
-plugin_alertnotify.py	UI Components	Basic	Alertnotify 기능을 실행합니다.	Alertnotify
-plugin_autoapprove.py	Remote/Automation	Basic	Autoapprove 기능을 실행합니다.	Autoapprove
-plugin_reportsummary.py	Reporting	Basic	Reportsummary 기능을 실행합니다.	Reportsummary
-plugin_antivirus_manager.py	Network/Security	Expert	Antivirus Manager 기능을 실행합니다.	Antivirus Manager
-plugin_system_repair.py	System Repair	Basic	System Repair 기능을 실행합니다.	System Repair
-plugin_optimize_ram.py	Optimization	Basic	Optimize Ram 기능을 실행합니다.	Optimize Ram
-plugin_basic_system_check.py	System Diagnostics	Basic	Basic System Check 기능을 실행합니다.	Basic System Check
-plugin_osinfo.py	System Diagnostics	Basic	Osinfo 기능을 실행합니다.	Osinfo
-plugin_systemcheck.py	System Diagnostics	Basic	Systemcheck 기능을 실행합니다.	Systemcheck
+plugin_ai_recommend.py	AI / Recommendation	Basic	AI 기반 시스템 최적화 항목을 추천합니다.	AI 추천
+plugin_antiviruscheck.py	Security	Basic	백신 프로그램의 실시간 보호 상태를 점검합니다.	백신 상태 점검
+plugin_autoruncheck.py	Autostart / Autorun	Basic	시작 프로그램을 분석하고 불필요한 항목을 찾습니다.	시작 프로그램 점검
+plugin_backupcheck.py	Backup	Basic	최근 백업 기록을 확인하고 백업 상태를 점검합니다.	백업 상태 점검
+plugin_browsercache.py	Browser	Basic	웹 브라우저의 캐시 파일을 정리합니다.	브라우저 캐시 정리
+plugin_browsercheck.py	Browser	Basic	웹 브라우저의 보안 설정을 점검합니다.	브라우저 보안 점검
+plugin_configlock.py	System Utilities	Expert	중요 설정 파일의 변경을 잠급니다.	설정 잠금
+plugin_dashboardgen.py	Reporting	Expert	시스템 상태 대시보드를 생성합니다.	대시보드 생성
+plugin_diskcheck.py	Storage	Basic	디스크의 오류 여부를 검사합니다.	디스크 오류 검사
+plugin_dismcheck.py	System Repair	Expert	DISM 도구를 사용하여 시스템 이미지 손상을 복구합니다.	시스템 이미지 복구
+plugin_dnscheck.py	Network	Basic	현재 설정된 DNS의 응답 속도 및 보안을 점검합니다.	DNS 점검
+plugin_drivercheck.py	Storage	Basic	설치된 장치 드라이버의 상태 및 업데이트를 확인합니다.	드라이버 점검
+plugin_eventlog.py	Logging	Expert	윈도우 이벤트 로그를 분석합니다.	이벤트 로그 분석
+plugin_feedback.py	System Utilities	Basic	프로그램 사용 피드백을 전송합니다.	피드백 보내기
+plugin_firewallcheck.py	Security	Basic	윈도우 방화벽의 활성화 및 규칙 상태를 점검합니다.	방화벽 점검
+plugin_fontcheck.py	System Fonts	Basic	시스템에 설치된 폰트의 오류를 확인합니다.	폰트 점검
+plugin_graphgen.py	Reporting	Expert	데이터를 기반으로 그래프를 생성합니다.	그래프 생성
+plugin_list_widget.py	UI Components	Expert	목록 형태의 위젯을 표시합니다.	리스트 위젯
+plugin_loganalyzer.py	Logging	Expert	프로그램 로그 파일을 분석합니다.	로그 분석
+plugin_logincheck.py	User / Account	Basic	최근 로그인 기록을 확인합니다.	로그인 기록 확인
+plugin_networkfix.py	Network	Expert	네트워크 연결 문제를 자동으로 해결합니다.	네트워크 문제 해결
+plugin_networkprofile.py	Network	Expert	저장된 네트워크 프로필을 관리합니다.	네트워크 프로필
+plugin_orgtemplate.py	Cleanup	Expert	조직 템플릿에 따라 파일을 정리합니다.	템플릿 정리
+plugin_pdfexport.py	Network	Expert	결과 보고서를 PDF 형식으로 내보냅니다.	PDF로 내보내기
+plugin_powercheck.py	Power / Battery	Basic	전원 관리 옵션 및 배터리 효율을 점검합니다.	전원 옵션 점검
+plugin_printercheck.py	Peripherals	Basic	연결된 프린터의 상태를 점검합니다.	프린터 점검
+plugin_quarantine.py	Security	Expert	악성코드로 의심되는 파일을 격리합니다.	파일 격리
+plugin_quarantinezip.py	Security	Expert	격리된 파일을 압축하여 보관합니다.	격리 파일 압축
+plugin_ramstress.py	Health / Diagnostics	Expert	RAM에 부하를 주어 안정성을 테스트합니다.	RAM 스트레스 테스트
+plugin_rdpcheck.py	Remote Access	Basic	원격 데스크톱 연결(RDP) 허용 상태를 점검합니다.	원격 데스크톱 점검
+plugin_reportbackup.py	Backup	Expert	생성된 보고서를 백업합니다.	보고서 백업
+plugin_reportcleanup.py	Cleanup	Basic	오래된 보고서 파일을 정리합니다.	오래된 보고서 정리
+plugin_reportcompress.py	Reporting	Expert	보고서 파일을 압축합니다.	보고서 압축
+plugin_reportflag.py	Reporting	Expert	보고서에 플래그를 지정합니다.	보고서 플래그
+plugin_reportmerge.py	Reporting	Expert	여러 보고서를 하나로 병합합니다.	보고서 병합
+plugin_reportsend.py	Reporting	Expert	생성된 보고서를 지정된 위치로 전송합니다.	보고서 전송
+plugin_restorepoint.py	System Repair	Expert	시스템 복원 지점을 생성하거나 사용합니다.	시스템 복원
+plugin_resultdb.py	DB / Storage	Expert	점검 결과를 데이터베이스에 저장합니다.	결과 DB 저장
+plugin_selfcheck.py	System Utilities	Basic	프로그램 자체의 무결성을 검사합니다.	프로그램 무결성 검사
+plugin_sfcscan.py	System Repair	Expert	SFC 도구를 사용하여 시스템 파일 손상을 복구합니다.	시스템 파일 복구
+plugin_sharecheck.py	Network	Basic	공유 폴더의 보안 설정을 점검합니다.	공유 폴더 점검
+plugin_stat_summary.py	Reporting	Basic	통계 요약 보고서를 생성합니다.	통계 요약
+plugin_taskcheck.py	Process / Task	Basic	현재 실행 중인 프로세스와 작업 스케줄러를 점검합니다.	프로세스 점검
+plugin_tempclean.py	Cleanup	Basic	임시 인터넷 파일 및 시스템 임시 파일을 정리합니다.	임시 파일 정리
+plugin_uaccheck.py	Security	Basic	사용자 계정 컨트롤(UAC) 설정을 점검합니다.	UAC 설정 점검
+plugin_uistatus.py	Monitoring	Basic	UI의 상태를 확인합니다.	UI 상태 확인
+plugin_updatecheck.py	Maintenance	Basic	윈도우 및 주요 프로그램의 업데이트를 확인합니다.	업데이트 확인
+plugin_usbcheck.py	Peripherals	Basic	연결된 USB 장치의 보안을 점검합니다.	USB 장치 점검
+plugin_usbscan.py	Peripherals	Expert	USB 드라이브의 악성코드를 검사합니다.	USB 정밀 검사
+plugin_usercheck.py	User / Account	Basic	사용자 계정의 암호 정책 및 설정을 점검합니다.	사용자 계정 점검
+plugin_userconfig.py	System Utilities	Expert	사용자 설정을 구성합니다.	사용자 설정
+plugin_userprofile.py	User / Account	Expert	사용자 프로필의 오류를 확인하고 복구합니다.	사용자 프로필 복구
+plugin_versioninfo.py	System Utilities	Basic	시스템 및 주요 프로그램의 버전 정보를 확인합니다.	버전 정보
+plugin_wingetupgrade.py	Maintenance	Expert	winget을 사용하여 프로그램을 업그레이드합니다.	winget 업그레이드
+plugin_clipboardcheck.py	Privacy	Basic	클립보드에 민감한 정보가 있는지 확인합니다.	클립보드 점검
+plugin_packagemanager.py	Package Management	Expert	설치된 소프트웨어 패키지를 관리합니다.	패키지 관리
+plugin_diskhealthcheck.py	Storage	Basic	디스크의 건강 상태(S.M.A.R.T.)를 점검합니다.	디스크 건강 상태
+plugin_windowsservicestatus.py	System Services	Basic	윈도우 주요 서비스의 실행 상태를 점검합니다.	윈도우 서비스 점검
+plugin_tempfolderusage.py	Cleanup	Expert	임시 폴더의 사용량을 분석합니다.	임시 폴더 사용량
+plugin_sfcccheck.py	Custom - SFCC	Expert	SFCC 관련 항목을 점검합니다.	SFCC 점검
+plugin_drivecheck.py	Storage	Basic	연결된 드라이브의 상태를 확인합니다.	드라이브 점검
+plugin_patchstatus.py	Monitoring	Basic	윈도우 및 주요 소프트웨어의 패치 상태를 확인합니다.	보안 패치 확인
+plugin_networkpolicy.py	Network	Expert	네트워크 정책 설정을 확인합니다.	네트워크 정책
+plugin_browserhistory.py	Browser	Expert	웹 브라우저의 방문 기록을 삭제합니다.	방문 기록 삭제
+plugin_inclusion.py	Development / Test	Expert	테스트용 모듈 포함 기능입니다.	모듈 포함 (테스트)
+plugin_stat_summary_en.py	Reporting	Basic	영문 통계 요약 보고서를 생성합니다.	통계 요약 (영문)
+plugin_upgradeproposal.py	Maintenance	Expert	시스템 업그레이드를 제안합니다.	업그레이드 제안
+plugin_applyupgrade.py	Maintenance	Expert	예약된 업그레이드를 적용합니다.	업그레이드 적용
+plugin_remotepush.py	Remote Management	Expert	원격으로 명령을 전송합니다.	원격 명령 전송
+plugin_resultsync.py	Synchronization	Expert	점검 결과를 서버와 동기화합니다.	결과 동기화
+plugin_approvalui.py	UI Components	Expert	작업 승인 UI를 표시합니다.	승인 UI
+plugin_autosign.py	Approval / Automation	Expert	보고서에 자동으로 서명합니다.	자동 서명
+plugin_selfupdate.py	Maintenance	Expert	프로그램을 최신 버전으로 업데이트합니다.	자동 업데이트
+plugin_alertnotify.py	UI Components	Expert	사용자에게 알림 메시지를 표시합니다.	알림 UI
+plugin_autoapprove.py	Approval / Automation	Expert	정의된 규칙에 따라 작업을 자동 승인합니다.	자동 승인
+plugin_reportsummary.py	Reporting	Basic	주요 점검 결과에 대한 요약 보고서를 생성합니다.	결과 요약
+plugin_antivirus_manager.py	Security	Expert	설치된 백신(Anti-virus)을 관리합니다.	백신 관리
+plugin_system_repair.py	System Repair	Expert	주요 시스템 오류를 자동으로 복구합니다.	시스템 자동 복구
+plugin_optimize_ram.py	Optimization	Basic	psutil과 PowerShell을 사용하여 실제 RAM 최적화 및 성능 측정을 수행합니다.	RAM 최적화
+plugin_basic_system_check.py	System Diagnostics	Basic	운영체제, CPU, 메모리, 디스크 등 기본적인 시스템 정보를 점검합니다.	기본 시스템 정보 점검
+plugin_osinfo.py	System Diagnostics	Basic	운영체제(OS)의 기본 정보를 수집합니다.	OS 정보
+plugin_systemcheck.py	System Diagnostics	Basic	psutil을 사용하여 CPU, 메모리, 디스크의 전반적인 상태를 종합적으로 점검합니다.	시스템 종합 점검

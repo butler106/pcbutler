@@ -146,8 +146,19 @@ class MainWindow(QMainWindow):
         for section in self.config.sections():
             self.settings[section.upper()] = {k.upper(): v for k, v in self.config.items(section)}
         self.settings['BASE_DIR'] = os.path.dirname(os.path.abspath(__file__))
-        
-        self.stop_event = Event() 
+
+        # 🚨 FIX: 콘솔 모드(main.py execute_console_plugins)에서만 주입되던
+        #        REPORT_DIR_FINAL 이 GUI 모드에서는 빠져 있어, plugin_base.py의
+        #        _save_result_to_file()가 매번 "보고서 저장 경로가 불명확합니다"를
+        #        출력하며 결과 JSON을 저장하지 못하던 문제를 수정.
+        raw_report_dir = self.settings.get('PATHS', {}).get('REPORT_DIR', 'reports')
+        self.settings['REPORT_DIR_FINAL'] = os.path.join(self.settings['BASE_DIR'], raw_report_dir)
+        try:
+            os.makedirs(self.settings['REPORT_DIR_FINAL'], exist_ok=True)
+        except Exception:
+            pass
+
+        self.stop_event = Event()
         self.worker = None 
         self.is_running = False
         self.current_theme = 'dark' # 기본 테마 설정
@@ -201,18 +212,30 @@ class MainWindow(QMainWindow):
         self.toolbar.addWidget(mode_label)
         self.mode_combo = QComboBox(self)
         self.mode_combo.addItems(self.plugins_by_group.keys())
-        # 기본값 설정 ('basic'이 일반 모드라고 가정)
-        if 'basic' in self.plugins_by_group:
-             self.mode_combo.setCurrentText("basic")
+        # 🚨 FIX: plugins_by_group의 실제 키는 "일반 모드"/"고급 모드"/"기타 모드 (개발자/업데이트)"이며
+        #        영문 'basic' 키는 존재하지 않아 이 기본값 설정이 항상 무시되고 있었음.
+        default_mode = "일반 모드"
+        if default_mode in self.plugins_by_group:
+            self.mode_combo.setCurrentText(default_mode)
         self.toolbar.addWidget(self.mode_combo)
         
         self.toolbar.addSeparator()
 
         # 실행 버튼
-        self.run_action = QAction(QIcon(), "진단 시작", self) 
+        self.run_action = QAction(QIcon(), "진단 시작", self)
         self.run_action.triggered.connect(self._run_task)
         self.toolbar.addAction(self.run_action)
-        
+
+        # 🚨 FIX(2026-08-31): "원클릭 최적화" — 예전 초안 파일에서는 버튼만 있고
+        #    "아직 개발 중인 기능입니다" 메시지만 출력하는 스텁이었다. 이미 검증된
+        #    _run_task() 실행 경로를 그대로 재사용해, 모드를 직접 고를 필요 없이
+        #    "일반 모드" 플러그인 그룹(진단→정리→복구에 해당하는 기본 항목들)을
+        #    바로 실행하는 버튼으로 실제 동작하게 만들었다.
+        self.one_click_action = QAction(QIcon(), "⚡ 원클릭 최적화", self)
+        self.one_click_action.setToolTip("모드 선택 없이 '일반 모드'의 진단·정리·복구 플러그인을 바로 실행합니다.")
+        self.one_click_action.triggered.connect(self._run_one_click_optimize)
+        self.toolbar.addAction(self.one_click_action)
+
         # 긴급 중지 버튼
         self.stop_action = QAction(QIcon(), "긴급 중지", self)
         self.stop_action.triggered.connect(self._stop_task)
@@ -356,7 +379,8 @@ class MainWindow(QMainWindow):
 
         self.is_running = True
         self.run_action.setEnabled(False)
-        self.stop_action.setEnabled(True) 
+        self.one_click_action.setEnabled(False)
+        self.stop_action.setEnabled(True)
         self.progress_bar.setValue(0)
         self.status_label.setText("작업 실행 중...")
         self.stop_event.clear() 
@@ -379,6 +403,19 @@ class MainWindow(QMainWindow):
         """자동 조치 버튼 클릭 시 호출됩니다."""
         self._run_task(plugins_to_run=[fix_plugin_name], is_follow_up=True)
 
+    def _run_one_click_optimize(self):
+        """'원클릭 최적화' 버튼: 모드 선택 없이 '일반 모드' 플러그인 그룹을 바로 실행한다."""
+        if self.is_running:
+            QMessageBox.warning(self, "경고", "이미 작업이 실행 중입니다. 잠시 기다려 주십시오.")
+            return
+        target_mode = "일반 모드"
+        if target_mode not in self.plugins_by_group:
+            self.log_message(f"❌ '{target_mode}' 그룹을 찾을 수 없습니다. plugin_index_categorized.txt를 확인하십시오.", "red")
+            return
+        # 콤보박스도 함께 맞춰서 사용자가 지금 무엇이 실행되는지 화면에서 알 수 있게 한다.
+        self.mode_combo.setCurrentText(target_mode)
+        self._run_task()
+
     def _stop_task(self):
         """실행 중인 작업을 중지합니다."""
         if self.is_running:
@@ -390,6 +427,7 @@ class MainWindow(QMainWindow):
         
         self.is_running = False
         self.run_action.setEnabled(True)
+        self.one_click_action.setEnabled(True)
         self.stop_action.setEnabled(False)
         self.progress_bar.setValue(100)
         
@@ -449,9 +487,18 @@ class MainWindow(QMainWindow):
             check_plugin_name = next((k for k, v in AUTO_FIX_MAPPING_GUI.items() if v == fix_plugin_name), None)
             
             if check_plugin_name:
-                check_plugin_name_without_ext = check_plugin_name.replace('.py', '')
-                
-                result = plugin_results.get(check_plugin_name_without_ext, {})
+                # FIX (2026-09-01): plugin_results is keyed by plugin_class.plugin_name
+                # (the display name, e.g. "🚨"-free display text), not by the AUTO_FIX_MAPPING_GUI
+                # filename key (e.g. "plugin_antiviruscheck"). Looking it up by filename
+                # always missed, so status defaulted to 'success' and the action button
+                # was never enabled even when the check plugin reported a real problem --
+                # this is why clicking felt like it did nothing (it was correctly disabled,
+                # but never got enabled in the first place). Resolve via plugin_name_to_class
+                # to get the actual display-name key used in plugin_results.
+                check_plugin_class = self.plugin_name_to_class.get(check_plugin_name)
+                lookup_key = check_plugin_class.plugin_name if check_plugin_class else check_plugin_name.replace('.py', '')
+
+                result = plugin_results.get(lookup_key, {})
                 status = result.get('status', 'success').lower()
                 
                 if status in ('warning', 'error', 'fatal_error'):

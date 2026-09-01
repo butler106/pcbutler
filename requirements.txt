@@ -1,0 +1,15 @@
+# PC Butler 실행에 필요한 서드파티 패키지 목록 (2026-09-01 신규 작성)
+# main.py / main_window.py / plugin_base.py / plugins/*.py 전체를 대상으로
+# 표준 라이브러리가 아닌 import를 모두 훑어서 뽑았다 (wmi/win32* 계열은
+# 코드 어디에서도 쓰이지 않아 포함하지 않음 - CLAUDE.md 참고).
+#
+# 지금까지는 이 목록이 어디에도 정리돼 있지 않아서, 새 venv를 만들고
+# PyQt5만 설치한 뒤 main.py를 실행하면 plugin_graphgen.py(matplotlib)와
+# plugin_pdfexport.py(fpdf2) 로딩이 조용히 실패하는 문제가 있었다
+# (전체 프로그램은 안 죽지만 그래프/PDF 기능이 소리 없이 사라짐).
+#
+# 설치: pip install -r requirements.txt
+PyQt5
+psutil
+matplotlib
+fpdf2

@@ -9,8 +9,10 @@ import re
 # 스크립트의 표준 출력(stdout)과 표준 오류(stderr)의 인코딩을 UTF-8로 강제 설정
 # (메인 프로그램 환경에서는 불필요하나, 단독 실행 테스트를 위해 유지)
 try:
-    sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-    sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 except Exception:
     pass
 
